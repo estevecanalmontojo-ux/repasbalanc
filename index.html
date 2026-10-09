@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pràctica de Comptabilitat - PGC PIMES</title>
+    <title>Pràctica de Comptabilitat - PGC PIMES (20 Exercicis)</title>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -115,15 +115,15 @@
     <!-- Pantalla d'inici -->
     <div id="screen-login" class="exercise-section">
         <h2>Identificació de l'alumne</h2>
-        <p>Introdueix el teu nom i cognoms. Disposes d'1 hora per completar els 15 exercicis de classificació i l'anàlisi de balanç final.</p>
+        <p>Introdueix el teu nom i cognoms. Disposes d'1 hora per completar els 20 exercicis de classificació i l'anàlisi de balanç final.</p>
         <label for="student-name">Nom i cognoms:</label>
         <input type="text" id="student-name" placeholder="Ex: Anna Garcia Pérez" required>
         <button class="btn" onclick="startExam()">Començar Examen</button>
     </div>
 
-    <!-- Bloc d'Exercicis de Classificació (15 elements diferents) -->
+    <!-- Bloc d'Exercicis de Classificació (20 elements diferents) -->
     <div id="screen-ex1" class="exercise-section hidden">
-        <h2>Exercici de Classificació al Quadre de Comptes <span id="progress-counter" class="counter-badge">1/15</span></h2>
+        <h2>Exercici de Classificació al Quadre de Comptes <span id="progress-counter" class="counter-badge">1/20</span></h2>
         <p>Indica a quina massa patrimonial o estat pertany l'element següent:</p>
         
         <h3 id="ex1-account-title" style="color: #2980b9;"></h3>
@@ -145,33 +145,33 @@
         <button id="ex1-next-btn" class="btn hidden" onclick="nextExercise1Item()">Següent element</button>
     </div>
 
-    <!-- Exercici Final: Anàlisi i Càlculs -->
+    <!-- Exercici Final: Anàlisi i Càlculs amb números nous -->
     <div id="screen-ex2" class="exercise-section hidden">
         <h2>Anàlisi de Balanç i Resultats Finals</h2>
-        <p>A partir de les dades de l'empresa, respon les qüestions següents:</p>
+        <p>A partir de les noves dades de l'empresa, respon les qüestions següents:</p>
         
         <table>
-            <tr><th>Estat Comptable</th><th>Dades i Valors</th></tr>
+            <tr><th>Estat Comptable</th><th>Dades i Valors Nous</th></tr>
             <tr>
                 <td><strong>Estructura Econòmica (Actiu)</strong></td>
-                <td>Actiu No Corrent: 140.000 € | Actiu Corrent: 40.000 € <br><strong>Total Actiu = 180.000 €</strong></td>
+                <td>Actiu No Corrent: 200.000 € | Actiu Corrent: 60.000 € <br><strong>Total Actiu = 260.000 €</strong></td>
             </tr>
             <tr>
                 <td><strong>Estructura Financera (Passiu Exigible)</strong></td>
-                <td>Passiu No Corrent: 60.000 € | Passiu Corrent: 30.000 € <br><strong>Total Passiu Exigible = 90.000 €</strong></td>
+                <td>Passiu No Corrent: 110.000 € | Passiu Corrent: 40.000 € <br><strong>Total Passiu Exigible = 150.000 €</strong></td>
             </tr>
             <tr>
                 <td><strong>Compte de Pèrdues i Guanys</strong></td>
-                <td>Total Ingressos de l'exercici: 110.000 € | Total Despeses de l'exercici: 80.000 €</td>
+                <td>Total Ingressos de l'exercici: 150.000 € | Total Despeses de l'exercici: 105.000 €</td>
             </tr>
         </table>
 
         <div style="margin-top: 15px;">
             <label><strong>1. Quin és el benefici net de l'exercici (€)?</strong></label>
-            <input type="number" id="ans-profit" placeholder="Ex: 30000">
+            <input type="number" id="ans-profit" placeholder="Ex: 45000">
 
             <label><strong>2. Quin és el valor total del Patrimoni Net (€)?</strong></label>
-            <input type="number" id="ans-equity" placeholder="Ex: 90000">
+            <input type="number" id="ans-equity" placeholder="Ex: 110000">
 
             <label><strong>3. Es troba l'empresa en situació d'equilibri financer (Actiu Corrent > Passiu Corrent)?</strong></label>
             <select id="ans-equilibrium">
@@ -201,82 +201,107 @@
     let timer;
     let timeLeft = 3600; // 1 hora
 
-    // 15 elements comptables diferents del PGC PIMES
+    // 20 elements comptables diferents del PGC PIMES
     const accountsEx1 = [
         {
-            code: "210. Terrenys i béns naturals[cite: 2]",
+            code: "212. Instal·lacions tècniques[cite: 7]",
             correct: "Actiu No Corrent",
-            definition: "Sòls de naturalesa urbana o rústica de propietat de l'empresa no destinats a la venda."
+            definition: "Elements d'unatge complex, enllumenat i sistemes específics de producció[cite: 7]."
         },
         {
-            code: "213. Maquinària[cite: 2]",
+            code: "214. Utillatge[cite: 7]",
             correct: "Actiu No Corrent",
-            definition: "Conjunt de màquines amb què es realitza l'extracció, elaboració o transformació de productes."
+            definition: "Estris o eines que s'utilitzen conjuntament amb la maquinària de manera separable[cite: 7]."
         },
         {
-            code: "218. Elements de transport[cite: 2]",
+            code: "217. Equips per a processos d'informació[cite: 7]",
             correct: "Actiu No Corrent",
-            definition: "Vehicles de qualsevol classe emprats per al transport de persones, animals, mercaderies o materials."
+            definition: "Ordinadors, impressores i altres components electrònics i perifèrics de gestió[cite: 7]."
         },
         {
-            code: "206. Aplicacions informàtiques[cite: 2]",
+            code: "221. Inversions en construccions[cite: 7]",
             correct: "Actiu No Corrent",
-            definition: "Import pagat o de propietat per l'adquisició o desenvolupament de programari informàtic."
+            definition: "Inversions en edificacions realitzades per a la seva explotació o arrendament[cite: 7]."
         },
         {
-            code: "310. Matèries primeres A[cite: 2]",
+            code: "301. Mercaderies B[cite: 7]",
             correct: "Actiu Corrent",
-            definition: "Materials que, mitjançant la transformació, s'incorporaran als productes fabricats per l'empresa."
+            definition: "Segona gamma de béns adquirits per l'empresa destinats a la revenda sense transformació[cite: 7]."
         },
         {
-            code: "430. Clients[cite: 2]",
+            code: "321. Combustibles[cite: 7]",
             correct: "Actiu Corrent",
-            definition: "Drets de crèdit amb compradors de mercaderies i prestadors de serveis de l'activitat comercial."
+            definition: "Matèries consumibles que s'utilitzen en el procés productiu que no s'incorporen al producte final[cite: 7]."
         },
         {
-            code: "570. Caixa, euros[cite: 1]",
+            code: "326. Embalatges[cite: 7]",
             correct: "Actiu Corrent",
-            definition: "Disponibilitat de mitjans líquids en efectiu (moneda nacional) a la caixa de l'empresa."
+            definition: "Materials destinats a contenir o protegir els productes destinats al transport o venda[cite: 7]."
         },
         {
-            code: "113. Reserves voluntàries[cite: 2]",
+            code: "328. Material d'oficina[cite: 7]",
+            correct: "Actiu Corrent",
+            definition: "Existències de consum corrent destinades a l'administració de l'empresa[cite: 7]."
+        },
+        {
+            code: "440. Deutors[cite: 6]",
+            correct: "Actiu Corrent",
+            definition: "Drets de crèdit amb compradors de serveis que no tenen la condició estricta de clients[cite: 6]."
+        },
+        {
+            code: "573. Bancs i institucions de crèdit c/v moneda estrangera[cite: 6]",
+            correct: "Actiu Corrent",
+            definition: "Comptes corrents en divises estrangeres a disposició immediata[cite: 6]."
+        },
+        {
+            code: "112. Reserva legal[cite: 7]",
             correct: "Patrimoni Net",
-            definition: "Beneficis no distribuïts lliurement retinguts per decisió de l'empresa."
+            definition: "Reserva de dotació obligatòria per llei a partir dels beneficis de l'exercici[cite: 7]."
         },
         {
-            code: "141. Provisió per a impostos[cite: 1]",
+            code: "173. Proveïdors d'immobilitzat a llarg termini[cite: 6]",
             correct: "Passiu No Corrent",
-            definition: "Obligacions a llarg termini degudes a probables o certes liquidacions tributàries pendents."
+            definition: "Deutes contrets amb subministradors de béns d'immobilitzat amb venciment superior a un any[cite: 6]."
         },
         {
-            code: "401. Proveïdors, efectes comercials a pagar[cite: 2]",
+            code: "410. Creditors per prestacions de serveis[cite: 6]",
             correct: "Passiu Corrent",
-            definition: "Deutes amb subministradors formalitzats en efectius o lletres de canvi a curt termini."
+            definition: "Deutes amb subministradors de serveis que no tenen la condició de proveïdors comercials[cite: 6]."
         },
         {
-            code: "465. Remuneracions pendents de pagament[cite: 2]",
+            code: "4751. Hisenda Pública, creditora per retencions practicades[cite: 6]",
             correct: "Passiu Corrent",
-            definition: "Quantitats merituades pel personal de l'empresa pendents de pagament al tancament."
+            definition: "Quantitats retingudes a treballadors o professionals pendents d'ingrés a Hisenda[cite: 6]."
         },
         {
-            code: "601. Compres de matèries primeres[cite: 1]",
+            code: "476. Organismes de la Seguretat Social, creditors[cite: 6]",
+            correct: "Passiu Corrent",
+            definition: "Quotes meritades a càrrec de l'empresa i dels treballadors pendents de pagament a la SS[cite: 6]."
+        },
+        {
+            code: "623. Serveis de professionals independents[cite: 6]",
             correct: "Despesa (P&G)",
-            definition: "Aprovisionament de materials destinats a ser transformats en el procés productiu."
+            definition: "Honoraris meritats per assessors, advocats, auditors o dissenyadors externs[cite: 6]."
         },
         {
-            code: "621. Arrendaments i canons[cite: 1]",
+            code: "625. Primes d'assegurances[cite: 6]",
             correct: "Despesa (P&G)",
-            definition: "Despeses per lloguers de béns mobles i immobles utilitzats per l'explotació."
+            definition: "Quantitats pagades en concepte de pòlisses d'assegurances de risc[cite: 6]."
         },
         {
-            code: "705. Prestacions de serveis[cite: 1]",
-            correct: "Ingrés (P&G)",
-            definition: "Facturació derivada de la realització de serveis realitzats per l'empresa als clients."
+            code: "642. Seguretat Social a càrrec de l'empresa[cite: 6]",
+            correct: "Despesa (P&G)",
+            definition: "Quotes de la Seguretat Social corresponents a la aportació empresarial[cite: 6]."
         },
         {
-            code: "762. Ingressos de crèdits[cite: 1]",
+            code: "701. Vendes de productes acabats[cite: 6]",
             correct: "Ingrés (P&G)",
-            definition: " Interessos meritats per crèdits concedits a tercers o l'entitat financera."
+            definition: "Facturació procedent de la venda de productes fabricats per la mateixa empresa[cite: 6]."
+        },
+        {
+            code: "754. Ingressos per comissions[cite: 6]",
+            correct: "Ingrés (P&G)",
+            definition: "Quantitats meritades per serveis de mediació o comissions comercials a tercers[cite: 6]."
         }
     ];
 
@@ -324,7 +349,7 @@
             document.getElementById("ex1-feedback").classList.add("hidden");
             document.getElementById("ex1-next-btn").classList.add("hidden");
         } else {
-            // Un cop acabats els 15 elements, passem a l'exercici 2
+            // Un cop acabats els 20 elements, passem a l'exercici 2
             document.getElementById("screen-ex1").classList.add("hidden");
             document.getElementById("screen-ex2").classList.remove("hidden");
         }
@@ -337,64 +362,3 @@
 
         if (!selected) {
             alert("Selecciona una opció.");
-            return;
-        }
-
-        feedbackDiv.classList.remove("hidden");
-        if (selected === currentAcc.correct) {
-            feedbackDiv.className = "feedback success";
-            feedbackDiv.textContent = "✔ Felicitats! Resposta correcta.";
-            scoreEx1 += 1;
-        } else {
-            feedbackDiv.className = "feedback error";
-            feedbackDiv.textContent = `❌ Error. Aquest element pertany a: ${currentAcc.correct}. Definició PGC PIMES: ${currentAcc.definition}`;
-        }
-        
-        document.getElementById("ex1-select").disabled = true;
-        document.getElementById("ex1-check-btn").style.display = "none";
-        document.getElementById("ex1-next-btn").classList.remove("hidden");
-    }
-
-    function nextExercise1Item() {
-        currentAccountIdx++;
-        loadAccountEx1();
-    }
-
-    function checkExercise2() {
-        const profit = parseFloat(document.getElementById("ans-profit").value);
-        const equity = parseFloat(document.getElementById("ans-equity").value);
-        const equilibrium = document.getElementById("ans-equilibrium").value;
-
-        let points = 0;
-        // Ingressos (110000) - Despeses (80000) = 30000 Benefici
-        if (profit === 30000) points += 1.5;
-        // Actiu Total (180000) - Passiu Exigible (90000) = 90000 Patrimoni Net
-        if (equity === 90000) points += 1.5;
-        // Actiu corrent (40000) > Passiu corrent (30000) -> Sí
-        if (equilibrium === "si") points += 1;
-
-        scoreEx2 = points;
-        finishExam();
-    }
-
-    function finishExam() {
-        clearInterval(timer);
-        document.getElementById("screen-ex1").classList.add("hidden");
-        document.getElementById("screen-ex2").classList.add("hidden");
-        document.getElementById("timer-container").classList.add("hidden");
-        document.getElementById("screen-results").classList.remove("hidden");
-
-        // Càlcul de la nota final sobre 10:
-        // Els 15 elements valen 7 punts en total (proporcionalment)
-        // L'exercici final val 4 punts (limitat màxim a 10)
-        let ex1Normalized = (scoreEx1 / accountsEx1.length) * 6;
-        let finalGrade = ex1Normalized + scoreEx2;
-        if (finalGrade > 10) finalGrade = 10;
-
-        document.getElementById("res-name").textContent = studentName;
-        document.getElementById("res-grade").textContent = finalGrade.toFixed(2) + " / 10";
-    }
-</script>
-
-</body>
-</html>
