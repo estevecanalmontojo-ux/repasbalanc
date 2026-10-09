@@ -3,318 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Examen de Comptabilitat - 20 Exercicis PGC PIMES</title>
+    <title>Pràctica de Comptabilitat - PGC PIMES</title>
     <style>
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --success-color: #27ae60;
-            --error-color: #c0392b;
-            --bg-color: #f8f9fa;
-        }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
             color: #333;
             margin: 0;
             padding: 20px;
         }
         .container {
-            max-width: 900px;
+            max-width: 800px;
             margin: 0 auto;
-            background: white;
+            background: #fff;
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        h1, h2, h3 {
-            color: var(--primary-color);
+        h1, h2 {
+            color: #2c3e50;
         }
-        .timer-box {
-            float: right;
-            background: #e74c3c;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 5px;
-            font-weight: bold;
+        .section {
+            display: none;
         }
-        .btn {
-            background-color: var(--secondary-color);
+        .active {
+            display: block;
+        }
+        button {
+            background-color: #3498db;
             color: white;
             border: none;
             padding: 10px 20px;
             font-size: 16px;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
             margin-top: 15px;
         }
-        .btn:hover {
+        button:hover {
             background-color: #2980b9;
         }
-        .btn-success {
-            background-color: var(--success-color);
-        }
-        .btn-success:hover {
-            background-color: #219653;
-        }
-        input, select {
+        input[type="text"], input[type="number"] {
             padding: 8px;
-            font-size: 15px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            font-size: 16px;
             width: 100%;
-            box-sizing: border-box;
-        }
-        .feedback {
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-        .feedback.success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        .feedback.error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        .hidden {
-            display: none;
-        }
-        .exercise-card {
-            background: #f8f9fa;
-            border: 1px solid #e1e8ed;
-            padding: 15px;
+            max-width: 400px;
+            margin-top: 5px;
             margin-bottom: 15px;
-            border-radius: 8px;
+            box-sizing: border-box;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            margin-top: 15px;
+            margin-bottom: 15px;
         }
-        table, th, td {
+        th, td {
             border: 1px solid #ddd;
-            padding: 8px;
+            padding: 10px;
+            text-align: left;
         }
         th {
-            background-color: #e4e7eb;
+            background-color: #f8f9fa;
+        }
+        .resultats-box {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div id="timer-container" class="timer-box hidden">Temps restant: <span id="time">60:00</span></div>
-    <h1>Examen Pràctic de Comptabilitat - Gestió Administrativa</h1>
-    
-    <!-- Pantalla d'inici -->
-    <div id="screen-login" class="exercise-card">
-        <h2>Identificació de l'alumne</h2>
-        <p>Aquesta prova consta de <strong>20 exercicis de classificació</strong> d'elements patrimonials i un <strong>bloc de càlculs de balanç</strong>. Disposes d'1 hora per completar-ho.</p>
-        <label for="student-name">Nom i cognoms:</label>
-        <input type="text" id="student-name" placeholder="Ex: Anna Garcia Pérez" required>
-        <button class="btn" onclick="startExam()">Començar Examen</button>
+    <!-- PART 1: IDENTIFICACIÓ -->
+    <div id="pantalla-inici" class="section active">
+        <h1>Pràctica de Comptes anuals (PGC PIMES)</h1>
+        <p>Introdueix les teves dades per començar els exercicis:</p>
+        <label for="nom-alumne">Nom i cognoms de l'alumne:</label><br>
+        <input type="text" id="nom-alumne" placeholder="Nom complet..."><br>
+        <button onclick="iniciarExercicis()">Començar</button>
     </div>
 
-    <!-- Contingut principal amb els 20 exercicis -->
-    <div id="screen-exam" class="hidden">
-        <h2>Bloc 1: 20 Exercicis de Classificació al Quadre de Comptes</h2>
-        <p>Classifica cadascun dels elements següents del PGC PIMES indicant la seva massa patrimonial o compte de resultats corresponent[cite: 1, 2, 6, 7]. Pots comprovar cada element a l'instant.</p>
+    <!-- PART 2: EXERCICI 1 (Classificació de comptes del document) -->
+    <div id="exercici-1" class="section">
+        <h2>Exercici 1: Classificació de Comptes</h2>
+        <p>Indica si cadascun d'aquests comptes del Quadre de Comptes pertany al <strong>Balanç de Situació</strong> o a la <strong>Pèrdua i Guanys</strong>:</p>
+        <div id="llista-ex1"></div>
+        <button onclick="comprovarEx1()">Comprovar Exercici 1 i Passar al Següent</button>
+    </div>
 
-        <div id="exercises-container">
-            <!-- S'omplirà dinàmicament amb els 20 exercicis -->
+    <!-- PART 3: EXERCICI 2 (20 Comptes amb valors i càlculs finals) -->
+    <div id="exercici-2" class="section">
+        <h2>Exercici 2: Balanç, Pèrdues i Guanys i càlculs clau</h2>
+        <p>Classifica els següents 20 comptes amb el seu valor numèric i calcula finalment els resultats demanats:</p>
+        <div id="llista-ex2"></div>
+        
+        <div class="resultats-box">
+            <h3>Preguntes Finals:</h3>
+            <label>1. Quant val el Benefici de l'exercici (o Resultat)?</label><br>
+            <input type="number" id="resp-benefici" step="0.01"><br>
+            
+            <label>2. Quant val el Valor Patrimonial (Patrimoni Net total)?</label><br>
+            <input type="number" id="resp-patrimoni" step="0.01"><br>
         </div>
 
-        <h2>Bloc 2: Anàlisi de Balanç i Càlculs Financers</h2>
-        <div class="exercise-card">
-            <p>A partir de les dades de l'empresa, resol les següents qüestions pràctiques:</p>
-            <table>
-                <tr><th>Estat Comptable</th><th>Valors de l'Empresa</th></tr>
-                <tr>
-                    <td><strong>Estructura Econòmica (Actiu)</strong></td>
-                    <td>Actiu No Corrent: 210.000 € | Actiu Corrent: 50.000 € <br><strong>Total Actiu = 260.000 €</strong></td>
-                </tr>
-                <tr>
-                    <td><strong>Estructura Financera (Passiu Exigible)</strong></td>
-                    <td>Passiu No Corrent: 100.000 € | Passiu Corrent: 40.000 € <br><strong>Total Passiu Exigible = 140.000 €</strong></td>
-                </tr>
-                <tr>
-                    <td><strong>Compte de Pèrdues i Guanys</strong></td>
-                    <td>Total Ingressos de l'exercici: 160.000 € | Total Despeses de l'exercici: 120.000 €</td>
-                </tr>
-            </table>
-
-            <div style="margin-top: 15px;">
-                <label><strong>1. Quin és el benefici net de l'exercici (€)?</strong></label>
-                <input type="number" id="ans-profit" placeholder="Ex: 40000">
-
-                <label><strong>2. Quin és el valor total del Patrimoni Net (€)?</strong></label>
-                <input type="number" id="ans-equity" placeholder="Ex: 120000">
-
-                <label><strong>3. Es troba l'empresa en situació d'equilibri financer (Actiu Corrent > Passiu Corrent)?</strong></label>
-                <select id="ans-equilibrium">
-                    <option value="">-- Selecciona --</option>
-                    <option value="si">Sí</option>
-                    <option value="no">No</option>
-                </select>
-            </div>
-        </div>
-
-        <button class="btn btn-success" onclick="finishExam()" style="font-size: 18px; padding: 12px 25px; width: 100%;">Finalitzar Examen i Obtenir Nota</button>
+        <button onclick="finalitzarPractica()">Enviar Resultats</button>
     </div>
 
-    <!-- Pantalla de Resultats Finals -->
-    <div id="screen-results" class="exercise-card hidden" style="text-align: center;">
-        <h2>Resultats Finals de l'Examen</h2>
-        <p>Alumne/a: <strong id="res-name"></strong></p>
-        <p>Nota final obtinguda:</p>
-        <h1 id="res-grade" style="color: var(--success-color); font-size: 48px;"></h1>
-        <p>Pots ensenyar aquesta pantalla al professor per a que l'apunti a l'acta.</p>
+    <!-- PART 4: RESULTATS FINALS -->
+    <div id="pantalla-final" class="section">
+        <h2>Resultats de la Pràctica</h2>
+        <p id="missatge-final"></p>
+        <div id="detall-correccio"></div>
     </div>
-
 </div>
 
 <script>
-    let studentName = "";
-    let timer;
-    let timeLeft = 3600; // 1 hora
+    let alumne = "";
 
-    // Banc exacte de 20 exercicis diferents de classificació comptable
-    const listEx = [
-        { id: 1, code: "210. Terrenys i béns naturals", correct: "Actiu No Corrent", def: "Sòls de naturalesa urbana o rústica de propietat de l'empresa[cite: 7]." },
-        { id: 2, code: "212. Instal·lacions tècniques", correct: "Actiu No Corrent", def: "Elements d'unatge complex i sistemes específics de producció[cite: 7]." },
-        { id: 3, code: "213. Maquinària", correct: "Actiu No Corrent", def: "Conjunt de màquines per a l'extracció o transformació de productes[cite: 7]." },
-        { id: 4, code: "214. Utillatge", correct: "Actiu No Corrent", def: "Estris o eines utilitzades conjuntament amb la maquinària[cite: 7]." },
-        { id: 5, code: "217. Equips per a processos d'informació", correct: "Actiu No Corrent", def: "Ordinadors, impressores i components electrònics de gestió[cite: 7]." },
-        { id: 6, code: "218. Elements de transport", correct: "Actiu No Corrent", def: "Vehicles emprats per al transport de persones o mercaderies[cite: 7]." },
-        { id: 7, code: "300. Mercaderies A", correct: "Actiu Corrent", def: "Béns adquirits per l'empresa destinats a la revenda sense transformació[cite: 2]." },
-        { id: 8, code: "310. Matèries primeres A", correct: "Actiu Corrent", def: "Materials destinats a incorporar-se als productes fabricats[cite: 2]." },
-        { id: 9, code: "321. Combustibles", correct: "Actiu Corrent", def: "Matèries consumibles utilitzades en el procés productiu[cite: 7]." },
-        { id: 10, code: "326. Embalatges", correct: "Actiu Corrent", def: "Materials destinats a protegir productes per al transport[cite: 7]." },
-        { id: 11, code: "430. Clients", correct: "Actiu Corrent", def: "Drets de crèdit amb compradors de mercaderies per operacions comercials[cite: 2]." },
-        { id: 12, code: "440. Deutors", correct: "Actiu Corrent", def: "Drets de crèdit amb compradors de serveis que no són clients directes[cite: 6]." },
-        { id: 13, code: "570. Caixa, euros", correct: "Actiu Corrent", def: "Disponibilitat de mitjans líquids en efectiu a la caixa[cite: 1]." },
-        { id: 14, code: "100. Capital social", correct: "Patrimoni Net", def: "Fons propis aportats pels socis o propietaris[cite: 2]." },
-        { id: 15, code: "112. Reserva legal", correct: "Patrimoni Net", def: "Reserva constituïda per imperatiu legal amb una fracció de beneficis[cite: 2]." },
-        { id: 16, code: "170. Deutes a llarg termini amb entitats de crèdit", correct: "Passiu No Corrent", def: "Préstecs rebuts amb entitats de crèdit amb venciment superior a un any[cite: 2]." },
-        { id: 17, code: "400. Proveïdors", correct: "Passiu Corrent", def: "Deutes amb subministradors de mercaderies a curt termini[cite: 2]." },
-        { id: 18, code: "410. Creditors per prestacions de serveis", correct: "Passiu Corrent", def: "Deutes amb subministradors de serveis a curt termini[cite: 6]." },
-        { id: 19, code: "600. Compres de mercaderies", correct: "Despesa (P&G)", def: "Aprovisionaments de béns adquirits per a la revenda[cite: 1]." },
-        { id: 20, code: "700. Vendes de mercaderies", correct: "Ingrés (P&G)", def: "Facturació derivada de la venda de béns de l'activitat principal[cite: 1]." }
+    // Comptes per a l'Exercici 1 basats en el PGC PIMES (Grups 1 a 7)[cite: 1, 2]
+    const comptesEx1 = [
+        { codi: "100", nom: "Capital social", tipus: "balanc" },
+        { codi: "211", nom: "Construccions", tipus: "balanc" },
+        { codi: "300", nom: "Mercaderies", tipus: "balanc" },
+        { codi: "400", nom: "Proveïdors", tipus: "balanc" },
+        { codi: "572", nom: "Bancs i institucions de crèdit c/v", tipus: "balanc" },
+        { codi: "600", nom: "Compres de mercaderies", tipus: "pyg" },
+        { codi: "640", nom: "Sous i salaris", tipus: "pyg" },
+        { codi: "700", nom: "Vendes de mercaderies", tipus: "pyg" },
+        { codi: "752", nom: "Ingressos per arrendaments", tipus: "pyg" }
     ];
 
-    function renderExercises() {
-        const container = document.getElementById("exercises-container");
-        let html = "";
-        listEx.forEach((ex, index) => {
-            html += `
-                <div class="exercise-card">
-                    <p><strong>Exercici ${index + 1}:</strong> Classifica l'element <strong>${ex.code}</strong></p>
-                    <select id="select-${ex.id}">
-                        <option value="">-- Selecciona una opció --</option>
-                        <option value="Actiu No Corrent">Actiu No Corrent</option>
-                        <option value="Actiu Corrent">Actiu Corrent</option>
-                        <option value="Patrimoni Net">Patrimoni Net</option>
-                        <option value="Passiu No Corrent">Passiu No Corrent</option>
-                        <option value="Passiu Corrent">Passiu Corrent</option>
-                        <option value="Despesa (P&G)">Despesa (Pèrdues i Guanys)</option>
-                        <option value="Ingrés (P&G)">Ingrés (Pèrdues i Guanys)</option>
-                    </select>
-                    <button class="btn" onclick="checkSingle(${ex.id})">Comprovar</button>
-                    <div id="feedback-${ex.id}" class="feedback hidden"></div>
-                </div>
-            `;
-        });
-        container.innerHTML = html;
-    }
-
-    function startExam() {
-        const nameInput = document.getElementById("student-name").value.trim();
-        if (!nameInput) {
-            alert("Introdueix el teu nom i cognoms.");
-            return;
-        }
-        studentName = nameInput;
-        document.getElementById("screen-login").classList.add("hidden");
-        document.getElementById("screen-exam").classList.remove("hidden");
-        document.getElementById("timer-container").classList.remove("hidden");
-
-        renderExercises();
-        startTimer();
-    }
-
-    function startTimer() {
-        timer = setInterval(() => {
-            let m = Math.floor(timeLeft / 60);
-            let s = timeLeft % 60;
-            document.getElementById("time").textContent = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-            if (timeLeft <= 0) {
-                clearInterval(timer);
-                alert("S'ha acabat el temps!");
-                finishExam();
-            }
-            timeLeft--;
-        }, 1000);
-    }
-
-    function checkSingle(id) {
-        const ex = listEx.find(item => item.id === id);
-        const selected = document.getElementById(`select-${id}`).value;
-        const feedback = document.getElementById(`feedback-${id}`);
-
-        if (!selected) {
-            alert("Selecciona una opció primer.");
-            return;
-        }
-
-        feedback.classList.remove("hidden");
-        if (selected === ex.correct) {
-            feedback.className = "feedback success";
-            feedback.textContent = "✔ Correcte!";
-        } else {
-            feedback.className = "feedback error";
-            feedback.textContent = `❌ Error. Aquest element pertany a: ${ex.correct}. Definició PGC PIMES: ${ex.def}`;
-        }
-    }
-
-    function finishExam() {
-        clearInterval(timer);
+    // 20 comptes amb valors per a l'Exercici 2
+    const comptesEx2 = [
+        { codi: "100", nom: "Capital social", valor: 50000, tipus: "balanc" },
+        { codi: "112", nom: "Reserva legal", valor: 5000, tipus: "balanc" },
+        { codi: "210", nom: "Terrenys i béns naturals", valor: 20000, tipus: "balanc" },
+        { codi: "211", nom: "Construccions", valor: 60000, tipus: "balanc" },
+        { codi: "216", nom: "Mobiliari", valor: 6000, tipus: "balanc" },
+        { codi: "300", nom: "Mercaderies", valor: 10000, tipus: "balanc" },
+        { codi: "430", nom: "Clients", valor: 8000, tipus: "balanc" },
+        { codi: "572", nom: "Bancs c/v", valor: 15000, tipus: "balanc" },
+        { codi: "400", nom: "Proveïdors", valor: 12000, tipus: "balanc" },
+        { codi: "170", nom: "Deutes a llarg termini amb entitats de crèdit", valor: 30000, tipus: "balanc" },
         
-        let scoreEx1 = 0;
-        listEx.forEach(ex => {
-            const selected = document.getElementById(`select-${ex.id}`).value;
-            if (selected === ex.correct) {
-                scoreEx1++;
-            }
+        { codi: "700", nom: "Vendes de mercaderies", valor: 90000, tipus: "pyg" },
+        { codi: "600", nom: "Compres de mercaderies", valor: 40000, tipus: "pyg" },
+        { codi: "640", nom: "Sous i salaris", valor: 25000, tipus: "pyg" },
+        { codi: "642", nom: "Seguretat Social a càrrec de l'empresa", valor: 8000, tipus: "pyg" },
+        { codi: "621", nom: "Arrendaments i canons", valor: 6000, tipus: "pyg" },
+        { codi: "628", nom: "Subministraments", valor: 3000, tipus: "pyg" },
+        { codi: "681", nom: "Amortització de l'immobilitzat material", valor: 4000, tipus: "pyg" },
+        { codi: "769", nom: "Altres ingressos financers", valor: 1000, tipus: "pyg" },
+        { codi: "662", nom: "Interessos de deutes", valor: 2000, tipus: "pyg" },
+        { codi: "630", nom: "Impost sobre beneficis (25%)", valor: 2250, tipus: "pyg" }
+    ];
+
+    function iniciarExercicis() {
+        const inputNom = document.getElementById("nom-alumne").value.trim();
+        if (inputNom === "") {
+            alert("Si us plau, introdueix el teu nom.");
+            return;
+        }
+        alumne = inputNom;
+        
+        // Generar contingut Exercici 1
+        let htmlEx1 = "<table><tr><th>Compte</th><th>Classificació</th></tr>";
+        comptesEx1.forEach((c, index) => {
+            htmlEx1 += `<tr>
+                <td>${c.codi} - ${c.nom}</td>
+                <td>
+                    <select id="ex1_${index}">
+                        <option value="">-- Selecciona --</option>
+                        <option value="balanc">Balanç de Situació</option>
+                        <option value="pyg">Pèrdua i Guanys</option>
+                    </select>
+                </td>
+            </tr>`;
         });
+        htmlEx1 += "</table>";
+        document.getElementById("llista-ex1").innerHTML = htmlEx1;
 
-        const profit = parseFloat(document.getElementById("ans-profit").value);
-        const equity = parseFloat(document.getElementById("ans-equity").value);
-        const equilibrium = document.getElementById("ans-equilibrium").value;
+        // Generar contingut Exercici 2
+        let htmlEx2 = "<table><tr><th>Compte</th><th>Valor (€)</th><th>Classificació</th></tr>";
+        comptesEx2.forEach((c, index) => {
+            htmlEx2 += `<tr>
+                <td>${c.codi} - ${c.nom}</td>
+                <td><strong>${c.valor.toLocaleString()} €</strong></td>
+                <td>
+                    <select id="ex2_class_${index}">
+                        <option value="">-- Selecciona --</option>
+                        <option value="balanc">Balanç de Situació</option>
+                        <option value="pyg">Pèrdua i Guanys</option>
+                    </select>
+                </td>
+            </tr>`;
+        });
+        htmlEx2 += "</table>";
+        document.getElementById("llista-ex2").innerHTML = htmlEx2;
 
-        let scoreEx2 = 0;
-        // Ingressos (160000) - Despeses (120000) = 40000 Benefici
-        if (profit === 40000) scoreEx2 += 1.5;
-        // Actiu Total (260000) - Passiu Exigible (140000) = 120000 Patrimoni Net
-        if (equity === 120000) scoreEx2 += 1.5;
-        // Actiu corrent (50000) > Passiu corrent (40000) -> Sí
-        if (equilibrium === "si") scoreEx2 += 1;
+        // Canviar de pantalla
+        document.getElementById("pantalla-inici").classList.remove("active");
+        document.getElementById("exercici-1").classList.add("active");
+    }
 
-        let gradeEx1 = (scoreEx1 / 20) * 6;
-        let finalGrade = gradeEx1 + scoreEx2;
-        if (finalGrade > 10) finalGrade = 10;
+    function comprovarEx1() {
+        // Validació senzilla o pas directe al segon bloc
+        document.getElementById("exercici-1").classList.remove("active");
+        document.getElementById("exercici-2").classList.add("active");
+    }
 
-        document.getElementById("screen-exam").classList.add("hidden");
-        document.getElementById("timer-container").classList.add("hidden");
-        document.getElementById("screen-results").classList.remove("hidden");
+    function finalitzarPractica() {
+        // Càlculs reals per comparar
+        let ingressos = 90000 + 1000; // 91000
+        let despeses = 40000 + 25000 + 8000 + 6000 + 3000 + 4000 + 2000 + 2250; // 90250
+        let beneficiReal = ingressos - despeses; // 750
 
-        document.getElementById("res-name").textContent = studentName;
-        document.getElementById("res-grade").textContent = finalGrade.toFixed(2) + " / 10";
+        // Patrimoni net inicial + Benefici (Capital 50000 + Reserva 5000 + Benefici 750 = 55750)
+        let patrimoniReal = 50000 + 5000 + beneficiReal;
+
+        let respBenUser = parseFloat(document.getElementById("resp-benefici").value) || 0;
+        let respPatUser = parseFloat(document.getElementById("resp-patrimoni").value) || 0;
+
+        document.getElementById("exercici-2").classList.remove("active");
+        document.getElementById("pantalla-final").classList.add("active");
+
+        let missatge = `Benvolgut/da <strong>${alumne}</strong>, has completat l'activitat.<br>`;
+        let detall = `<ul>
+            <li>Benefici de l'exercici calculat per tu: <strong>${respBenUser} €</strong> (Valor real correcte: ${beneficiReal} €)</li>
+            <li>Valor patrimonial calculat per tu: <strong>${respPatUser} €</strong> (Valor real correcte: ${patrimoniReal} €)</li>
+        </ul>`;
+
+        document.getElementById("missatge-final").innerHTML = missatge;
+        document.getElementById("detall-correccio").innerHTML = detall;
     }
 </script>
 
