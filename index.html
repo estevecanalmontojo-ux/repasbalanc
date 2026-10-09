@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pràctica de Comptabilitat - PGC PIMES</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --success-color: #27ae60;
+            --error-color: #c0392b;
+            --bg-color: #f8f9fa;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: var(--primary-color);
+        }
+        .timer-box {
+            float: right;
+            background: #e74c3c;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        input, select {
+            padding: 8px;
+            font-size: 15px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .feedback.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .feedback.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .hidden {
+            display: none;
+        }
+        .exercise-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f1f2f6;
+            border-radius: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #e4e7eb;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="timer-container" class="timer-box hidden">Temps restant: <span id="time">60:00</span></div>
+    <h1>Simulació de Comptabilitat - PGC PIMES</h1>
+    
+    <!-- Pantalla d'inici -->
+    <div id="screen-login" class="exercise-section">
+        <h2>Identificació de l'alumne</h2>
+        <p>Introdueix el teu nom i cognoms abans de començar l'activitat. Disposes d'1 hora per completar els dos exercicis.</p>
+        <label for="student-name">Nom i cognoms:</label>
+        <input type="text" id="student-name" placeholder="Ex: Anna Garcia Pérez" required>
+        <button class="btn" onclick="startExam()">Començar Exercicis</button>
+    </div>
+
+    <!-- Exercici 1: Classificació de Comptes -->
+    <div id="screen-ex1" class="exercise-section hidden">
+        <h2>Exercici 1: Col·locació d'Elements al Quadre de Comptes</h2>
+        <p>Classifica l'element comptable següent al seu estat i massa patrimonial corresponent:</p>
+        
+        <h3 id="ex1-account-title" style="color: #2980b9;"></h3>
+        
+        <label for="ex1-select">Selecciona on pertany:</label>
+        <select id="ex1-select">
+            <option value="">-- Selecciona una opció --</option>
+            <option value="Actiu No Corrent">Actiu No Corrent</option>
+            <option value="Actiu Corrent">Actiu Corrent</option>
+            <option value="Patrimoni Net">Patrimoni Net</option>
+            <option value="Passiu No Corrent">Passiu No Corrent</option>
+            <option value="Passiu Corrent">Passiu Corrent</option>
+            <option value="Despesa (P&G)">Despesa (Pèrdues i Guanys)</option>
+            <option value="Ingrés (P&G)">Ingrés (Pèrdues i Guanys)</option>
+        </select>
+        <button class="btn" onclick="checkExercise1()">Comprovar Element</button>
+        
+        <div id="ex1-feedback" class="feedback hidden"></div>
+        <button id="ex1-next-btn" class="btn hidden" onclick="nextExercise1Item()">Següent element</button>
+    </div>
+
+    <!-- Exercici 2: Càlculs i Anàlisi de Balanç -->
+    <div id="screen-ex2" class="exercise-section hidden">
+        <h2>Exercici 2: Anàlisi de Balanç i Resultats</h2>
+        <p>A partir de les dades simplificades de l'empresa, resol les següents qüestions:</p>
+        
+        <table>
+            <tr><th>Estat Comptable</th><th>Elements i Valors Comuns</th></tr>
+            <tr>
+                <td><strong>Actiu Total</strong></td>
+                <td>Actiu No Corrent: 120.000 € | Actiu Corrent: 30.000 € (inclou Bancs 572[cite: 1]: 15.000 €) <br><strong>Total Actiu = 150.000 €</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Passiu Exigible</strong></td>
+                <td>Passiu No Corrent: 50.000 € | Passiu Corrent (Proveïdors 400[cite: 2]): 20.000 € <br><strong>Total Passiu = 70.000 €</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Pèrdues i Guanys</strong></td>
+                <td>Ingressos (Vendes 700[cite: 1]): 90.000 € | Despeses (Compres 600[cite: 1] + Personal 640[cite: 1]): 65.000 €</td>
+            </tr>
+        </table>
+
+        <div style="margin-top: 15px;">
+            <label><strong>1. Introdueix el Benefici net del compte de Pèrdues i Guanys (€):</strong></label>
+            <input type="number" id="ans-profit" placeholder="Ex: 25000">
+
+            <label><strong>2. Quin és el valor total del Patrimoni Net (€) de l'empresa?</strong></label>
+            <input type="number" id="ans-equity" placeholder="Ex: 80000">
+
+            <label><strong>3. Es troba l'empresa en situació d'equilibri financer (Fons de maniobra positiu o adequat)?</strong></label>
+            <select id="ans-equilibrium">
+                <option value="">-- Selecciona --</option>
+                <option value="si">Sí</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+
+        <button class="btn" onclick="checkExercise2()">Finalitzar i Enviar</button>
+        <div id="ex2-feedback" class="feedback hidden"></div>
+    </div>
+
+    <!-- Pantalla de Resultats Finals -->
+    <div id="screen-results" class="exercise-section hidden">
+        <h2>Resultats Finals</h2>
+        <p>Alumne: <strong id="res-name"></strong></p>
+        <p>Nota obtinguda: <h1 id="res-grade" style="color: var(--success-color);"></h1></p>
+        <p>Pots ensenyar aquesta pantalla al teu professor per a que l'apunti.</p>
+    </div>
+
+</div>
+
+<script>
+    let studentName = "";
+    let timer;
+    let timeLeft = 3600; // 1 hora en segons
+
+    // Dades dels elements del PGC PIMES per a l'Exercici 1
+    const accountsEx1 = [
+        {
+            code: "572. Bancs i institucions de crèdit c/c vista, euros[cite: 1]",
+            correct: "Actiu Corrent",
+            definition: "Segons el PGC PIMES, recull els comptes corrents amb bancs i institucions de crèdit de disponibilitat immediata."
+        },
+        {
+            code: "211. Construccions[cite: 2]",
+            correct: "Actiu No Corrent",
+            definition: "Edificacions en general utilitzades per a l'activitat productiva o administrativa de l'empresa."
+        },
+        {
+            code: "100. Capital social[cite: 2]",
+            correct: "Patrimoni Net",
+            definition: "Fons propis aportats pels socis o propietaris integrants del finançament bàsic de l'empresa."
+        },
+        {
+            code: "400. Proveïdors[cite: 2]",
+            correct: "Passiu Corrent",
+            definition: "Deutes amb subministradors de mercaderies i béns per operacions del tràfic a curt termini."
+        },
+        {
+            code: "600. Compres de mercaderies[cite: 1]",
+            correct: "Despesa (P&G)",
+            definition: "Aprovisionaments de béns adquirits per l'empresa per a la seva revenda sense alteració."
+        },
+        {
+            code: "700. Vendes de mercaderies[cite: 1]",
+            correct: "Ingrés (P&G)",
+            definition: "Facturació derivada de la transmissió de béns objecte de l'activitat principal de l'empresa."
+        }
+    ];
+
+    let currentAccountIdx = 0;
+    let scoreEx1 = 0;
+    let scoreEx2 = 0;
+
+    function startExam() {
+        const nameInput = document.getElementById("student-name").value.trim();
+        if (!nameInput) {
+            alert("Si us plau, introdueix el teu nom i cognoms.");
+            return;
+        }
+        studentName = nameInput;
+        document.getElementById("screen-login").classList.add("hidden");
+        document.getElementById("screen-ex1").classList.remove("hidden");
+        document.getElementById("timer-container").classList.remove("hidden");
+
+        startTimer();
+        loadAccountEx1();
+    }
+
+    function startTimer() {
+        timer = setInterval(() => {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            document.getElementById("time").textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                alert("S'ha acabat el temps!");
+                finishExam();
+            }
+            timeLeft--;
+        }, 1000);
+    }
+
+    function loadAccountEx1() {
+        if (currentAccountIdx < accountsEx1.length) {
+            document.getElementById("ex1-account-title").textContent = accountsEx1[currentAccountIdx].code;
+            document.getElementById("ex1-select").value = "";
+            document.getElementById("ex1-feedback").classList.add("hidden");
+            document.getElementById("ex1-next-btn").classList.add("hidden");
+        } else {
+            // Passar a l'exercici 2
+            document.getElementById("screen-ex1").classList.add("hidden");
+            document.getElementById("screen-ex2").classList.remove("hidden");
+        }
+    }
+
+    function checkExercise1() {
+        const selected = document.getElementById("ex1-select").value;
+        const feedbackDiv = document.getElementById("ex1-feedback");
+        const currentAcc = accountsEx1[currentAccountIdx];
+
+        if (!selected) {
+            alert("Selecciona una opció.");
+            return;
+        }
+
+        feedbackDiv.classList.remove("hidden");
+        if (selected === currentAcc.correct) {
+            feedbackDiv.className = "feedback success";
+            feedbackDiv.textContent = "✔ Felicitats! Resposta correcta.";
+            scoreEx1 += 1;
+        } else {
+            feedbackDiv.className = "feedback error";
+            feedbackDiv.textContent = `❌ Error. Aquest element pertany a: ${currentAcc.correct}. Definició PGC PIMES: ${currentAcc.definition}`;
+        }
+        document.getElementById("ex1-next-btn").classList.remove("hidden");
+    }
+
+    function nextExercise1Item() {
+        currentAccountIdx++;
+        loadAccountEx1();
+    }
+
+    function checkExercise2() {
+        const profit = parseFloat(document.getElementById("ans-profit").value);
+        const equity = parseFloat(document.getElementById("ans-equity").value);
+        const equilibrium = document.getElementById("ans-equilibrium").value;
+
+        let points = 0;
+        // Ingressos (90000) - Despeses (65000) = 25000 Benefici
+        if (profit === 25000) points += 1.5;
+        // Actiu (150000) - Passiu (70000) = 80000 Patrimoni Net
+        if (equity === 80000) points += 1.5;
+        // Equilibri: Actiu corrent (30000) > Passiu corrent (20000), per tant Sí
+        if (equilibrium === "si") points += 1;
+
+        scoreEx2 = points;
+        finishExam();
+    }
+
+    function finishExam() {
+        clearInterval(timer);
+        document.getElementById("screen-ex1").classList.add("hidden");
+        document.getElementById("screen-ex2").classList.add("hidden");
+        document.getElementById("timer-container").classList.add("hidden");
+        document.getElementById("screen-results").classList.remove("hidden");
+
+        // Càlcul de nota final sobre 10
+        // Exercici 1 val 6 punts (6 elements x 1 punt)
+        // Exercici 2 val 4 punts (2.5 de càlculs + 1.5 d'equilibri, adaptat a escala)
+        let ex1Normalized = (scoreEx1 / accountsEx1.length) * 6;
+        let finalGrade = ex1Normalized + scoreEx2;
+        if (finalGrade > 10) finalGrade = 10;
+
+        document.getElementById("res-name").textContent = studentName;
+        document.getElementById("res-grade").textContent = finalGrade.toFixed(2) + " / 10";
+    }
+</script>
+
+</body>
+</html>
